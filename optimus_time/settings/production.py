@@ -4,6 +4,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = False
 
+CORS_ORIGIN_WHITELIST = []
+
 ALLOWED_HOSTS = []
 
 DB_USER = os.environ.get('DB_USER')
