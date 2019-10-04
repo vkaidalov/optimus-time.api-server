@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
+    'custom_rest_auth.apps.CustomRestAuthConfig',
     'users.apps.UsersConfig',
 ]
 
