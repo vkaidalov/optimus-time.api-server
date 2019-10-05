@@ -6,6 +6,7 @@ from rest_framework import exceptions
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.serializers import ValidationError
 from rest_framework.views import APIView
 
 from . import serializers
@@ -59,3 +60,22 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'detail': 'Registration completed.'})
+
+
+class PasswordChangeView(APIView):
+    serializer_class = serializers.PasswordChangeSerializer
+
+    def post(self, request):
+        serializer = serializers.PasswordChangeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = request.user
+
+        if not user.check_password(serializer.validated_data['old_password']):
+            raise ValidationError({
+                'old_password': ['Wrong password.']
+            })
+
+        user.set_password(serializer.validated_data['new_password'])
+        user.save()
+        return Response({'detail': 'Password changed.'})

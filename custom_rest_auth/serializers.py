@@ -41,8 +41,14 @@ class RegisterSerializer(serializers.Serializer):
         max_length=LAST_NAME_MAX_LENGTH,
         required=False
     )
-    password = serializers.CharField(write_only=True)
-    password_repeat = serializers.CharField(write_only=True)
+    password = serializers.CharField(
+        write_only=True,
+        min_length=PASSWORD_MIN_LENGTH
+    )
+    password_repeat = serializers.CharField(
+        write_only=True,
+        min_length=PASSWORD_MIN_LENGTH
+    )
 
     @staticmethod
     def _field_is_unique(field_name, value):
@@ -84,3 +90,25 @@ class RegisterSerializer(serializers.Serializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(
+        write_only=True,
+        min_length=PASSWORD_MIN_LENGTH
+    )
+    new_password = serializers.CharField(
+        write_only=True,
+        min_length=PASSWORD_MIN_LENGTH
+    )
+    new_password_repeat = serializers.CharField(
+        write_only=True,
+        min_length=PASSWORD_MIN_LENGTH
+    )
+
+    def validate(self, data):
+        if data['new_password'] != data['new_password_repeat']:
+            raise serializers.ValidationError(
+                "The two password fields didn't match."
+            )
+        return data
