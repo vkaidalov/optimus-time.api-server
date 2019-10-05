@@ -1,5 +1,8 @@
 import os
 
+from django.utils import timezone
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -16,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
     'custom_rest_auth.apps.CustomRestAuthConfig',
@@ -106,4 +110,20 @@ REST_FRAMEWORK = {
         'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
     ),
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'custom_rest_auth.authentication.ExpiringTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
+
+
+# Constants for the custom ExpiringTokenAuthentication
+
+USER_TOKEN_DURATION_DAYS = 7
+USER_TOKEN_LIFETIME = timezone.timedelta(days=USER_TOKEN_DURATION_DAYS)
