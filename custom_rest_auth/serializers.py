@@ -112,3 +112,10 @@ class PasswordChangeSerializer(serializers.Serializer):
                 "The two password fields didn't match."
             )
         return data
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = USER_MODEL
+        fields = ('pk', 'username', 'email', 'first_name', 'last_name')
+        read_only_fields = ('pk', 'email')
