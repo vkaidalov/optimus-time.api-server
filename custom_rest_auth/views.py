@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import authenticate
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from rest_framework import exceptions
 from rest_framework.authtoken.models import Token
@@ -25,10 +26,7 @@ class LoginView(APIView):
         login_serializer = LoginSerializer(data=request.data)
         login_serializer.is_valid(raise_exception=True)
 
-        user = authenticate(
-            username=login_serializer.validated_data['username'],
-            password=login_serializer.validated_data['password']
-        )
+        user = authenticate(**login_serializer.validated_data)
 
         if not user:
             raise exceptions.NotFound('Invalid username/password.')
@@ -41,3 +39,12 @@ class LoginView(APIView):
 
         token_serializer = TokenSerializer(token)
         return Response(token_serializer.data)
+
+
+class LogoutView(APIView):
+    def post(self, request):
+        try:
+            request.user.auth_token.delete()
+        except (AttributeError, ObjectDoesNotExist):
+            pass
+        return Response({'detail': 'Successfully logged out.'})
