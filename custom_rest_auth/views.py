@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import LoginSerializer, TokenSerializer
+from . import serializers
 
 
 class HelloWorldView(APIView):
@@ -20,10 +20,10 @@ class HelloWorldView(APIView):
 
 class LoginView(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = LoginSerializer
+    serializer_class = serializers.LoginSerializer
 
     def post(self, request):
-        login_serializer = LoginSerializer(data=request.data)
+        login_serializer = serializers.LoginSerializer(data=request.data)
         login_serializer.is_valid(raise_exception=True)
 
         user = authenticate(**login_serializer.validated_data)
@@ -37,7 +37,7 @@ class LoginView(APIView):
             token.delete()
             token = Token.objects.create(user=user)
 
-        token_serializer = TokenSerializer(token)
+        token_serializer = serializers.TokenSerializer(token)
         return Response(token_serializer.data)
 
 
@@ -48,3 +48,14 @@ class LogoutView(APIView):
         except (AttributeError, ObjectDoesNotExist):
             pass
         return Response({'detail': 'Successfully logged out.'})
+
+
+class RegisterView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.RegisterSerializer
+
+    def post(self, request):
+        serializer = serializers.RegisterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'detail': 'Registration completed.'})
