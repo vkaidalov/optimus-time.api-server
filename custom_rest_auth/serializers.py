@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
+
+from .models import ExpiringToken
 
 USER_MODEL = get_user_model()
 
@@ -21,9 +22,9 @@ class LoginSerializer(serializers.Serializer):
     )
 
 
-class TokenSerializer(serializers.ModelSerializer):
+class ExpiringTokenSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Token
+        model = ExpiringToken
         fields = ('key',)
 
 
