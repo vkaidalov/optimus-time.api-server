@@ -18,11 +18,11 @@ class ExpiringTokenModelTests(TestCase):
     def test_is_expired_with_new_token(self):
         expiring_token = ExpiringToken(user=self.user)
         expiring_token.save()
-        self.assertFalse(expiring_token.is_expired())
+        self.assertIs(expiring_token.is_expired, False)
 
     def test_is_expired_with_expired_token(self):
         expired_token = ExpiringToken(user=self.user)
         expired_token.save()
         expired_token.created -= settings.USER_TOKEN_LIFETIME
         expired_token.save()
-        self.assertTrue(expired_token.is_expired())
+        self.assertIs(expired_token.is_expired, True)

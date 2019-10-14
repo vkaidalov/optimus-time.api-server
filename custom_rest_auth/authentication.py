@@ -11,7 +11,7 @@ class ExpiringTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, key):
         user, token = super().authenticate_credentials(key)
 
-        if token.is_expired():
+        if token.is_expired:
             raise AuthenticationFailed(_("Token expired."))
 
         return user, token

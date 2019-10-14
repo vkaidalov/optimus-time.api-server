@@ -7,5 +7,6 @@ class ExpiringToken(Token):
     class Meta:
         proxy = True
 
+    @property
     def is_expired(self):
         return timezone.now() >= self.created + settings.USER_TOKEN_LIFETIME

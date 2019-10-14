@@ -32,7 +32,7 @@ class LoginView(APIView):
 
         token, _created = ExpiringToken.objects.get_or_create(user=user)
 
-        if token.is_expired():
+        if token.is_expired:
             token.delete()
             token = ExpiringToken.objects.create(user=user)
 
