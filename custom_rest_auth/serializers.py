@@ -22,12 +22,6 @@ class LoginSerializer(serializers.Serializer):
     )
 
 
-class ExpiringTokenSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExpiringToken
-        fields = ('key',)
-
-
 class RegisterSerializer(serializers.Serializer):
     username = serializers.CharField(
         min_length=USERNAME_MIN_LENGTH,

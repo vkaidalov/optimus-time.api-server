@@ -9,7 +9,6 @@ from rest_framework.views import APIView
 
 from .serializers import (
     LoginSerializer,
-    ExpiringTokenSerializer,
     RegisterSerializer,
     PasswordChangeSerializer,
     UserProfileSerializer
@@ -36,8 +35,7 @@ class LoginView(APIView):
             token.delete()
             token = ExpiringToken.objects.create(user=user)
 
-        token_serializer = ExpiringTokenSerializer(token)
-        return Response(token_serializer.data)
+        return Response({'token': token.key})
 
 
 class LogoutView(APIView):
