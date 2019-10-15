@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import exceptions
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny
@@ -40,10 +39,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     def post(self, request):
-        try:
-            request.user.auth_token.delete()
-        except (AttributeError, ObjectDoesNotExist):
-            pass
+        request.user.auth_token.delete()
         return Response({'detail': 'Successfully logged out.'})
 
 

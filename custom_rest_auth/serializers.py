@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import ExpiringToken
-
 USER_MODEL = get_user_model()
 
 USERNAME_MIN_LENGTH = 5
