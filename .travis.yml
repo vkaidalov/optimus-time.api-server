@@ -16,3 +16,9 @@ script:
 - coverage run manage.py test
 after_success:
 - codecov
+deploy:
+  provider: heroku
+  api_key:
+    secure: E3Ldl+4vIWMQbc9gkYPQqNihUCmAJO2r1sIfjC0dDIqpKjPHnhpfJTPOopwzhPKVWhok0CdqYoI/EydzpNMXFSBy4mrIHHarj0HEl/jdAs/dgOtLKeZYVFh1NHo/k3NOWEjPZS0S3RIA/vVPZU/ICr7RKmUdTCMkMgnWvNhw0dXRyduaBCSMOf+D6H8ITARd0YmED8uECsvlIC4W/SjXDXMgSWehTLxoqnNVs86YuG7kPZZzJnsAYuz3TW8De2vbC70H9c68sBXaLJzm7z90NkEM7wxO7EVz+Ny7au+IrBVCi/75whKci7r3aNTL9GXFsmeL9GzVvW7vd4jdXdRXpfYgQAjXkrHFGwuw+yTMbEv25uppAi21I75ymiT56ZkkelYjdgpNsbdi5EurIwhf5hx5tTkFYSG+SWxUC8nqE5FAEM6zWPUrQLQ0fWBz7j4wOUtlz+6FAGH3RAN+SnGv/bBK2nSpUNeIr8EQJvruKndmAo6Aq9216BV/gBY5ndUBm2Uz23r2GJj5Du+4BZmNzMBnO6BDhqbtsf4eFXfkfINb0vT4+jfelDLsUfDW6dpI7UCPc1llcb459yCwhKfJL+sF9chfpP6VvzvTbibOlV5EvlGBZ9A8mE5rEBvBwHlXETApKiXxytVgTP0I7qwn3/hlOZuU6nhfbugxcpBZ288=
+  app: optimustime
+  run: "python3 manage.py migrate"
