@@ -1,3 +1,5 @@
+import django_heroku
+
 from .base import *
 
 SECRET_KEY = '==avaw@p#bpuv2fw3)vel*y93wvqrsfduwm4+g9ri3#i$&_m&l'
@@ -18,3 +20,5 @@ DATABASES = {
         'PORT': ''
     }
 }
+
+django_heroku.settings(locals())

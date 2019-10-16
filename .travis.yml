@@ -4,15 +4,15 @@ language: python
 python: 3.7
 cache: pip
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 services:
-  - postgresql
+- postgresql
 addons:
   postgresql: '10'
 before_script:
-  - psql -U postgres -f dev_setup_postgresql.sql
-  - python3 manage.py migrate
+- psql -U postgres -f dev_setup_postgresql.sql
+- python3 manage.py migrate
 script:
-  - coverage run manage.py test
+- coverage run manage.py test
 after_success:
-  - codecov
+- codecov
