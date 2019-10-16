@@ -10,16 +10,15 @@ ALLOWED_HOSTS = '*'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
+
+# This isn't really needed because Heroku creates its own DATABASE_URL setting.
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
+        'NAME': 'optimus_time',
+        'USER': 'optimus_time_admin',
+        'PASSWORD': 'optimus_time',
         'HOST': 'localhost',
         'PORT': ''
     }
